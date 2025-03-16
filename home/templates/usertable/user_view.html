@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+{%block title%}user{%endblock%}
+{%block content%}
+<div class="view">
+  <p>user table</p>
+  <a href="{% url 'home:add_user'%}">add new user</a>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+      <th>S.No.</th>
+      <th>pk</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Update</th>
+      <th>Delete</th>
+      <th>Created at</th>
+    </tr>
+
+    </thead>
+    <tbody>
+      {%for data in usr %}
+      <tr><td>{{forloop.counter}}</td>
+      <td>{{data.pk}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.email}}</td>
+      <td><a href="{%url 'home:update_user' data.pk%}">update </a></td>
+      <td>  
+          <form method="POST" action="{%url 'user_table:user_delete' data.pk%}">
+          {%csrf_token%}
+          <button type="submit" onclick="return confirm('Are You sure to delete {{data.name}}?');">delete</button>
+          </form>
+      </td>
+      <td>{{data.created_at}}</td>
+    </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+{%endblock%}

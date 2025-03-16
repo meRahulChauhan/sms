@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Choose Subject{% endblock %}
+{% block content %}
+<div class="form-container">
+
+
+<form method="POST" action="#" class="form-box">
+  {% csrf_token %}
+  
+  <div class="row mb-3">
+    <div class="col-12">
+      <label for="base_subjects" class="form-label">Subjects:</label>
+      <ul class="list-group">
+        {% for data in sub_base %}
+        <li class="list-group-item">{{ data }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  
+  {% if sub_elective %}
+  <div class="row mb-3">
+    <div class="col-12">
+      <label for="sub_elective" class="form-label">Elective Subjects</label>
+      <select id="sub_elective" name="elective" class="form-select"> <!-- Added name -->
+        {% for data in sub_elective %}
+        <option value="{{ data }}">{{ data }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {% endif %}
+  
+  {% if sub_optional %}
+  <div class="row mb-3">
+    <div class="col-12">
+      <label for="sub_optional" class="form-label">Optional Subjects</label>
+      <select id="sub_optional" name="optional" class="form-select"> <!-- Added name -->
+        {% for data in sub_optional %}
+        <option value="{{ data }}">{{ data }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {% endif %}
+  
+  <div class="row">
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+
+
+</div>
+{% endblock %}

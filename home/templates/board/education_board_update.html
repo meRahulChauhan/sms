@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+{%block title%}Add Board Name{%endblock%}
+{%block content%}
+
+<div class="form-container">
+	<div class="form-box">
+			<form method="POST" >
+				{%csrf_token%}
+				<h3>Update Board Name</h3>
+
+				<div class="mb-3">
+					<label for="name" class="form-label">Name</label>
+					<input type="text" name="name" class="form-control" value="{{board_name}}" required>
+				</div>
+				
+
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-success">Save</button>	
+				</div>
+	
+		</form>
+	</div>
+</div>
+
+<div>
+</div>
+
+{%endblock%} 
+ 

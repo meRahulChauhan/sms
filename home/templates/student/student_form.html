@@ -1,0 +1,52 @@
+{%extends 'base.html'%}
+{%block title%} Student Form {%endblock%}
+{%block content%}
+<div class="form-container">
+	<div class="form-box">
+			<form method="POST" >
+				{%csrf_token%}
+				<h2>Add Student</h2>
+				<div class="mb-3">
+					<label for="board" class="form-label">Select Education Board</label>
+					<select class="form-select" name="board_name" required>
+						<option></option>
+						{%for board in education_board%}
+						<option value="{{board.pk}}">{{board}}</option>
+						{%endfor%}						
+					</select>
+					</div>
+
+				
+				<div class="mb-3">
+					<label for="class" class="form-label">Class</label>
+					<select class="form-select" name="class_name" required>
+						<option></option>
+						{%for key,value in student_class.items%}
+						<option value="{{key}}">{{value}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="name" class="form-label">Name</label>
+					<input type="text" name="name" class="form-control" required>
+				</div>
+				<div class="mb-3">
+					<label for="email" class="form-label">Email</label>
+					<input type="email" name="email" class="form-control" required>
+				</div>
+				
+
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-success">Save</button>	
+				</div>
+	
+		</form>
+	</div>
+</div>
+<div>
+</div>
+<script type="text/javascript">
+	
+</script>
+{%endblock%}

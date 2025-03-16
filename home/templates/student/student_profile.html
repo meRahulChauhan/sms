@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+<div class="container " id="profile-section">
+    <div class="card shadow border-0">
+        <div class="card-header bg-dark text-white text-center p-3">
+            <h3 class="mb-2" style="font-size: 1.5rem;">{{ student.name }}</h3>
+            <p class="mb-0" style="font-size: 0.9rem;">
+                Class: {{ student.student_class }} - {{ student.educational_Board_id }} | ID: {{ student.pk }}| {{student.email}}
+            </p>
+        </div>
+        <div class="card-body p-3" style="font-size: 0.9rem;">
+            {% if has_info %}
+                <!-- Personal Information -->
+                <h4 class="text-danger mb-3" style="font-size: 1.2rem;">Personal Information</h4>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <p><strong>Gender:</strong> {{ student_info.get_gender_display }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Date of Birth:</strong> {{ student_info.dob }}</p>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <p><strong>Email:</strong> {{ student.email }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Guardian:</strong> {{ student_info.gaurdian }}</p>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <p><strong>Address:</strong> {{ student_info.address }}, 
+                            {{ student_info.city }}, {{ student_info.state }}, 
+                            {{ student_info.country }} - {{ student_info.postal_code }}
+                        </p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning text-center">
+                    <p style="font-size: 0.85rem;">Student information is missing. Please <a href="{{ student_info_url }}">click here</a> to fill in the details.</p>
+                </div>
+            {% endif %}
+            
+            {% if parent %}
+                <!-- Parent Information -->
+                <h4 class="text-danger mb-3" style="font-size: 1.2rem;">Parent Information</h4>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <p><strong>Mother:</strong> {{ parent.mother_name }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Father:</strong> {{ parent.father_name }}</p>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <p><strong>Parent Email:</strong> {{ parent.email }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Phone:</strong> {{ parent.parent_phone }}</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning text-center">
+                    <p style="font-size: 0.85rem;">Parent information is missing. Please <a href="{{ student_info_url }}">click here</a> to fill in the details.</p>
+                </div>
+            {% endif %}
+
+            <!-- Subject List -->
+            <h4 class="text-danger mb-3" style="font-size: 1.2rem;">Subjects</h4>
+            {% if subjects %}
+                <ul class="list-group" style="font-size: 0.85rem;">
+                    {% for subject in subjects %}
+                        <li class="list-group-item">{{ subject.subject }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="font-size: 0.85rem;">No subjects assigned yet. <a href="{% url 'student:save_subject' student.pk %}">Add subjects</a></p>
+            {% endif %}
+        </div>
+        <div class="card-footer text-center bg-light">
+            <button class="btn btn-danger btn-sm" onclick="printProfile();">Print Profile</button>
+            <a href="{% url 'student:studentInfoUpdate' student.pk %}" class="btn btn-primary btn-sm">Update Information</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function printProfile() {
+        // Select only profile section to be printed
+        const printContents = document.getElementById("profile-section").innerHTML;
+        const originalContents = document.body.innerHTML;
+
+        // Replace the body content with the profile section
+        document.body.innerHTML = `<html><head><title>Student Profile</title></head><body>${printContents}</body></html>`;
+        
+        // Trigger print
+        window.print();
+
+        // Restore the original content after printing
+        document.body.innerHTML = originalContents;
+        location.reload();
+    }
+</script>
+{% endblock %}

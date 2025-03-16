@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Student List{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white text-center p-3">
+            <h1 class="h5">Student Info</h1>
+            <p class="text-success mb-0">Total Students: {{ st_count }}</p>
+        </div>
+
+        <!-- Table -->
+        <div class="card-body p-2">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover align-middle">
+                    <thead class="table-danger text-center">
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">ID</th>
+                            <th scope="col" class="text-primary">Name</th>
+                            <th scope="col">Class</th>
+                            <th scope="col" class="text-danger">Email</th>
+                            <th scope="col">Update</th>
+                            <th scope="col">Discard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in page_obj %}
+                        <tr>
+                            <th scope="row" class="text-center">{{ forloop.counter }}</th>
+                            <td class="text-center fw-bold">{{ s.student_id }}</td>
+                            <td>
+                                <a href="{% url 'student:student_profile' s.student_id %}" 
+                                   class="text-decoration-none text-primary fw-bold">
+                                    {{ s.name }}
+                                </a>
+                            </td>
+                            <td class="text-center">{{ s.student_class }}</td>
+                            <td class="text-danger fw-bold">{{ s.email }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'student:student_update' s.pk %}" 
+                                   class="btn btn-sm btn-outline-primary">
+                                    Update
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <form action="{% url 'student:student_delete' s.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete {{ s.name }}?');">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="card-footer text-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    <li class="page-item disabled">
+                        <span class="page-link">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</span>
+                    </li>
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}
