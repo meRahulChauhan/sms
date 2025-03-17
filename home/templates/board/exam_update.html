@@ -1,33 +1,45 @@
- 
-{%extends 'base.html'%}
-{%block title%}Update Exam Name{%endblock%}
-{%block content%}
+{% extends 'base.html' %}
+{% block title %}Update Exam Name{% endblock %}
 
-<div class="form-container">
-	<div class="form-box">
-			<form method="POST" >
-				{%csrf_token%}
-				<h3>Update Exam name</h3>
+{% block content %}
+<div class="container ">
+    <div class="card shadow-lg border-0">
+        <!-- Form Header -->
+        <div class="card-header bg-dark text-white text-center">
+            <h3><i class="fas fa-edit me-2"></i>Update Exam Name</h3>
+        </div>
 
-				<div class="mb-3">
-					<label for="name" class="form-label">Name</label>
-					<input type="text" name="name" class="form-control" value="{{exam.name}}"required>
-				</div>
+        <!-- Form Body -->
+        <div class="card-body">
+            <form method="POST" class="row g-4">
+                {% csrf_token %}
 
-				<div class="mb-3">
-					<label for="exam_type" class="form-label">Exam Type</label>
-					<input type="text" name="exam_type" class="form-control" value="{{exam.exam_type}}" required>
-				</div>
-				
-				<div class="mb-3">
-					<button type="submit" class="btn btn-success">Save</button>	
-				</div>
-	
-		</form>
-	</div>
+                <!-- Exam Name -->
+                <div class="col-md-12">
+                    <label for="name" class="form-label">
+                        <i class="fas fa-book-open me-2"></i>Name
+                    </label>
+                    <input type="text" id="name" name="name" class="form-control shadow-sm" 
+                           value="{{ exam.name }}" required>
+                </div>
+
+                <!-- Exam Type -->
+                <div class="col-md-12">
+                    <label for="exam_type" class="form-label">
+                        <i class="fas fa-list-alt me-2"></i>Exam Type
+                    </label>
+                    <input type="text" id="exam_type" name="exam_type" class="form-control shadow-sm" 
+                           value="{{ exam.exam_type }}" required>
+                </div>
+
+                <!-- Save Button -->
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success px-5 py-2 shadow-sm">
+                        <i class="fas fa-save me-2"></i>Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<div>
-</div>
-
-{%endblock%} 
- 
+{% endblock %}

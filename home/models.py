@@ -17,7 +17,11 @@ class Choice(models.Model):
                             'phy':'physics','Comp':'Computer','Art':'Art','Com':'Commerce','Geo':'Geography','PSci':'Political Sciecne',
                             'Env':'Environment','Soc':'Social','Hs':'History'}
     types={'Q':'Query','C':'Complain','Help':'Help','R':'Report a problem'}
-    attendance={('a','absent'),('p','present')}
+    attendance={
+        'a':'absent',
+        'p':'present',
+        'ol':'on_leave'
+        }
     
 
     subject_list = {

@@ -1,52 +1,70 @@
-{%extends 'base.html'%}
-{%block title%} Student Form {%endblock%}
-{%block content%}
-<div class="form-container">
-	<div class="form-box">
-			<form method="POST" >
-				{%csrf_token%}
-				<h2>Add Student</h2>
-				<div class="mb-3">
-					<label for="board" class="form-label">Select Education Board</label>
-					<select class="form-select" name="board_name" required>
-						<option></option>
-						{%for board in education_board%}
-						<option value="{{board.pk}}">{{board}}</option>
-						{%endfor%}						
-					</select>
-					</div>
+{% extends 'base.html' %}
+{% block title %} Student Form {% endblock %}
+{% block content %}
+<div class="container ">
+    <div class="card shadow-lg border-0">
+        <!-- Form Header -->
+        <div class="card-header bg-dark text-white text-center">
+            <h2><i class="fas fa-user-plus me-2"></i>Add Student</h2>
+        </div>
 
-				
-				<div class="mb-3">
-					<label for="class" class="form-label">Class</label>
-					<select class="form-select" name="class_name" required>
-						<option></option>
-						{%for key,value in student_class.items%}
-						<option value="{{key}}">{{value}}</option>
-						{%endfor%}
-					</select>
-				</div>
-				<div class="mb-3">
-					<label for="name" class="form-label">Name</label>
-					<input type="text" name="name" class="form-control" required>
-				</div>
-				<div class="mb-3">
-					<label for="email" class="form-label">Email</label>
-					<input type="email" name="email" class="form-control" required>
-				</div>
-				
+        <!-- Form Body -->
+        <div class="card-body">
+            <form method="POST" class="row g-4">
+                {% csrf_token %}
+                
+                <!-- Education Board -->
+                <div class="col-md-6">
+                    <label for="board" class="form-label">
+                        <i class="fas fa-school me-2"></i>Select Education Board
+                    </label>
+                    <select id="board" class="form-select shadow-sm" name="board_name" required>
+                        <option value="" disabled selected>Choose an education board...</option>
+                        {% for board in education_board %}
+                        <option value="{{ board.pk }}">{{ board }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
+                <!-- Class -->
+                <div class="col-md-6">
+                    <label for="class" class="form-label">
+                        <i class="fas fa-chalkboard me-2"></i>Class
+                    </label>
+                    <select id="class" class="form-select shadow-sm" name="class_name" required>
+                        <option value="" disabled selected>Choose a class...</option>
+                        {% for key, value in student_class.items %}
+                        <option value="{{ key }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-				<div class="mb-3">
-					<button type="submit" class="btn btn-success">Save</button>	
-				</div>
-	
-		</form>
-	</div>
+                <!-- Name -->
+                <div class="col-md-6">
+                    <label for="name" class="form-label">
+                        <i class="fas fa-user me-2"></i>Name
+                    </label>
+                    <input type="text" id="name" name="name" class="form-control shadow-sm" 
+                           placeholder="Enter student's name" required>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </label>
+                    <input type="email" id="email" name="email" class="form-control shadow-sm" 
+                           placeholder="Enter student's email" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success px-5 py-2 shadow-sm">
+                        <i class="fas fa-save me-2"></i>Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<div>
-</div>
-<script type="text/javascript">
-	
-</script>
-{%endblock%}
+{% endblock %}

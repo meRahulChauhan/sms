@@ -1,38 +1,58 @@
- 
-{%extends 'base.html'%}
-{%block title%}View Exam {%endblock%}
-{%block content%}
+{% extends 'base.html' %}
+{% block title %}View Exam{% endblock %}
 
-<div class="view">
-	<p>View Exam Name</p>
-	<a href="{%url 'admins:exam_add'%}">add Exam</a>
-	<table class="table table-striped table-bordered">
-		<thead>
-			<tr>
-				<th>S.No.</th>
-				<th>ID</th>
-				<th>Exam</th>
-				<th>Update</th>
-				<th>Delete</th>
-			</tr>
-		</thead>
-		<tbody>
-			{%for data in exam%}
-			<tr>
-				<td>{{forloop.counter}}</td>
-				<td>{{data.pk}}</td>
-				<td>{{data.name}}</td>
-				<td><a href="{%url 'admins:exam_update' data.pk%}">update</a></td>
-				<td>
-					<form action="{%url 'admins:exam_delete' data.pk%}" method="POST">
-						{%csrf_token%}
-						<button type="submit" onclick="return confirm('Are you sure you want to delete {{data.name}}? Deleting Exam Name is irreversible action causing loosing all related student and data. Are you still sure?');">Delete</button>
-					</form>
-				</td>
-			</tr>
-			{%endfor%}
-		</tbody>
-	</table>
+{% block content %}
+<div class="container ">
+    <div class="card shadow-lg border-0">
+        <!-- Header -->
+        <div class="card-header bg-dark text-white text-center">
+            <h3><i class="fas fa-book me-2"></i>View Exam Name</h3>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+            <div class="mb-3 text-end">
+                <a href="{% url 'admins:exam_add' %}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-2"></i>Add Exam
+                </a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th><i class="fas fa-list-ol me-2"></i>S.No.</th>
+                            <th><i class="fas fa-id-card me-2"></i>ID</th>
+                            <th><i class="fas fa-book me-2"></i>Exam</th>
+                            <th><i class="fas fa-edit me-2"></i>Update</th>
+                            <th><i class="fas fa-trash-alt me-2"></i>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in exam %}
+                        <tr>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td class="text-center">{{ data.pk }}</td>
+                            <td>{{ data.name }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'admins:exam_update' data.pk %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit me-1"></i>Update
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <form action="{% url 'admins:exam_delete' data.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete {{ data.name }}? Deleting this exam name is irreversible and will cause loss of all related student data. Are you still sure?');">
+                                        <i class="fas fa-trash-alt me-1"></i>Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-{%endblock%}
-
+{% endblock %}

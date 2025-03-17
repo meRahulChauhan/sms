@@ -3,9 +3,14 @@
 {% block content %}
 <div class="container">
     <div class="card shadow-sm">
+        <!-- Card Header -->
         <div class="card-header bg-dark text-white text-center p-3">
-            <h1 class="h5">Student Info</h1>
-            <p class="text-success mb-0">Total Students: {{ st_count }}</p>
+            <h1 class="h5">
+                <i class="fas fa-users me-2"></i>Student Info
+            </h1>
+            <p class="text-success mb-0">
+                <i class="fas fa-user-check me-2"></i>Total Students: {{ st_count }}
+            </p>
         </div>
 
         <!-- Table -->
@@ -14,13 +19,13 @@
                 <table class="table table-bordered table-striped table-hover align-middle">
                     <thead class="table-danger text-center">
                         <tr>
-                            <th scope="col">S.No</th>
-                            <th scope="col">ID</th>
-                            <th scope="col" class="text-primary">Name</th>
-                            <th scope="col">Class</th>
-                            <th scope="col" class="text-danger">Email</th>
-                            <th scope="col">Update</th>
-                            <th scope="col">Discard</th>
+                            <th scope="col"><i class="fas fa-list-ol"></i> S.No</th>
+                            <th scope="col"><i class="fas fa-id-card"></i> ID</th>
+                            <th scope="col" class="text-primary"><i class="fas fa-user"></i> Name</th>
+                            <th scope="col"><i class="fas fa-chalkboard-teacher"></i> Class</th>
+                            <th scope="col" class="text-danger"><i class="fas fa-envelope"></i> Email</th>
+                            <th scope="col"><i class="fas fa-edit"></i> Update</th>
+                            <th scope="col"><i class="fas fa-trash"></i> Discard</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,15 +36,15 @@
                             <td>
                                 <a href="{% url 'student:student_profile' s.student_id %}" 
                                    class="text-decoration-none text-primary fw-bold">
-                                    {{ s.name }}
+                                    <i class="fas fa-user-graduate me-1"></i>{{ s.name }}
                                 </a>
                             </td>
-                            <td class="text-center">{{ s.student_class }}</td>
-                            <td class="text-danger fw-bold">{{ s.email }}</td>
+                            <td class="text-center"><i class="fas fa-book me-1"></i>{{ s.student_class }}</td>
+                            <td class="text-danger fw-bold"><i class="fas fa-at me-1"></i>{{ s.email }}</td>
                             <td class="text-center">
                                 <a href="{% url 'student:student_update' s.pk %}" 
                                    class="btn btn-sm btn-outline-primary">
-                                    Update
+                                    <i class="fas fa-pencil-alt me-1"></i>Update
                                 </a>
                             </td>
                             <td class="text-center">
@@ -47,7 +52,7 @@
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-sm btn-outline-danger"
                                         onclick="return confirm('Are you sure you want to delete {{ s.name }}?');">
-                                        Delete
+                                        <i class="fas fa-times-circle me-1"></i>Delete
                                     </button>
                                 </form>
                             </td>
@@ -64,10 +69,14 @@
                 <ul class="pagination justify-content-center mb-0">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page=1">&laquo; First</a>
+                        <a class="page-link" href="?page=1">
+                            <i class="fas fa-angle-double-left"></i> First
+                        </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            <i class="fas fa-angle-left"></i> Previous
+                        </a>
                     </li>
                     {% endif %}
                     <li class="page-item disabled">
@@ -75,10 +84,14 @@
                     </li>
                     {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            <i class="fas fa-angle-right"></i> Next
+                        </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                            Last <i class="fas fa-angle-double-right"></i>
+                        </a>
                     </li>
                     {% endif %}
                 </ul>
@@ -86,4 +99,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

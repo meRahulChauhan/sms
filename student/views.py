@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.core.serializers import serialize
+from django.utils.timezone import now
 from .models import Student, StudentInfo, ParentInfo, Attendence, Subject, Fee
 from django.http import HttpRequest,HttpResponse,JsonResponse
 from django.core.paginator import Paginator
@@ -10,6 +11,7 @@ import re
 from .forms import StudentForm
 from admin_.models import EducationalBoard,EducationalYear        
 from home.models import Choice
+
 
 # Create your views here.
 #multiple string based name with multiple spaces
@@ -439,3 +441,39 @@ def studentInfoUpdate(request,pk):
         'gender':Choice.gender_choice
     }
     return render(request,'student/student_info_form_update.html',context)
+
+def mark_class_attendance(request, class_name):
+    if request.method == 'POST':
+        students = Student.objects.filter(student_class=class_name)
+
+        for student in students:
+            attendance_status = request.POST.get(f"attendance_{student.pk}")
+            print(f"Attendance for {student.name}: {attendance_status}")
+            
+            today = now().date()
+            exist_record = Attendence.objects.filter(student_id=student, attendance_date=today).first()
+            
+            if exist_record:
+                return JsonResponse({'attendence already done':True})
+            else:
+                if attendance_status:
+                    Attendence.objects.create(
+                        student_id=student,
+                        attendance_date=now().date(),
+                        attendance_status=attendance_status
+                    )
+               
+        return JsonResponse({'success': True})
+
+    else:
+        # Prepare context for the GET request
+        choice = Choice.attendance
+        AS = [k for k in choice]  # Use list comprehension for simplicity
+
+        context = {
+            'students': Student.objects.filter(student_class=class_name),
+            'absent': AS[0],
+            'present': AS[1],
+            'leave': AS[2],
+        }
+        return render(request, 'student/mark_attendance.html', context)

@@ -13,6 +13,7 @@ urlpatterns = [
     path('dashboard/student/studentInfo/<str:pk>/',views.studentInfo,name='studentInfo'),
     path('dashboard/student/parentInfo/<str:pk>/',views.studentInfo,name='parentInfo'),
     path('dashboard/student/studentInfoUpdate/<str:pk>/',views.studentInfoUpdate,name='studentInfoUpdate'),
+    path('dashboard/student/attendance/<str:class_name>/', views.mark_class_attendance, name='mark_class_attendance'),
     #path('dashboard/exam_view',views.Exam_view)
 
 ]

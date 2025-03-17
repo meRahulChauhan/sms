@@ -4,8 +4,6 @@ from django.utils import timezone
 from home.models import Choice
 from django.contrib.auth.hashers import make_password
 
-
-
 class teacher(models.Model):
     teacher_id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=64,blank=False)

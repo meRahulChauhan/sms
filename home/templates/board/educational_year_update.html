@@ -1,25 +1,35 @@
-{%extends 'base.html'%}
-{%block title%}Add Board Name{%endblock%}
-{%block content%}
+{% extends 'base.html' %}
+{% block title %}Add Session Year{% endblock %}
 
-<div class="form-container">
-	<div class="form-box">
-			<form method="POST" >
-				{%csrf_token%}
-				<h3>Add Session Year</h3>
+{% block content %}
+<div class="container">
+    <div class="card shadow-lg border-0 bg-dark text-white">
+        <!-- Header -->
+        <div class="card-header text-center">
+            <h3><i class="fas fa-calendar-plus me-2"></i>Add Session Year</h3>
+        </div>
 
-				<div class="mb-3">
-					<label for="name" class="form-label">Year</label>
-					<input type="text" name="name" class="form-control" value="{{y.year}}" required>
-				</div>
-				
-				<div class="mb-3">
-					<button type="submit" class="btn btn-success">Save</button>	
-				</div>	
-		</form>
-	</div>
+        <!-- Form Body -->
+        <div class="card-body bg-white text-dark">
+            <form method="POST" class="row g-3">
+                {% csrf_token %}
+
+                <!-- Session Year -->
+                <div class="col-md-12">
+                    <label for="name" class="form-label">
+                        <i class="fas fa-calendar-alt me-2"></i>Year
+                    </label>
+                    <input type="text" id="name" name="name" class="form-control shadow-sm" value="{{ y.year }}" placeholder="Enter session year" required>
+                </div>
+
+                <!-- Save Button -->
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success px-5 py-2 shadow-sm">
+                        <i class="fas fa-save me-2"></i>Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<div>
-</div>
-
-{%endblock%} 
+{% endblock %}
